@@ -24,17 +24,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func configureUI(setRecordView: Bool) {
-        if setRecordView {
-            userActionLabel.text = "Record"
-            recordingLabel.isHidden = true
-            recordButton.isHidden = false
-            stopButton.isHidden = true
-        } else {
-            userActionLabel.text = "Stop Recording"
-            recordingLabel.isHidden = false
-            recordButton.isHidden = true
-            stopButton.isHidden = false
-        }
+        userActionLabel.text = setRecordView ? "Record" : "Stop Recording"
+        recordingLabel.isHidden = setRecordView
+        recordButton.isHidden = !setRecordView
+        stopButton.isHidden = setRecordView
     }
     
     @IBAction func onRecordButtonPress(_ sender: Any) {
@@ -67,7 +60,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         } else {
             let alert = UIAlertController(title: "Error! :(", message: "Unable to record audio. Please try again.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (alert) in self.configureUI(setRecordView: true) }))
-            self.present(alert, animated: true)
+            present(alert, animated: true)
         }
     }
     
